@@ -19,6 +19,7 @@ std::vector<double *> readData(std::string path){// path라는 문자열을 입�
         std::cerr<<"Iris data file could not be read"<<std::endl;
         return data;
     }
+    
     std::string str;
 
     while (std::getline(file,str)){ //파일에서 한줄 읽어오기
@@ -35,21 +36,31 @@ std::vector<double *> readData(std::string path){// path라는 문자열을 입�
         data.push_back(d); //배열 d를 data에 저장
     }
 
-    double max=std::numeric_limits<double>::max();
-    double min = std::numeric_limits<double>::min();
-    double mins[4]{max,max,max,max};
-    double maxes[4]={min,min,min,min};
-
-    for (auto row : data){
-        for (size_t i=0;i<4; i++){
+    double max=std::numeric_limits<double>::max(); // 컴퓨터가 가지고 있는 가장 큰 double 값
+    double min = std::numeric_limits<double>::min();// 가장 작은 double 값
+    double mins[4]{max,max,max,max};// 4칸 짜리 max 배열
+    double maxes[4]={min,min,min,min};//4칸 짜리 min 배열
+    
+    for (auto& row : data){
+        for (size_t i=0;i<4; i++){//size_t 양수만 표현할 수 있는 정수 타입
             if (row[i]>maxes[i]) maxes[i]=row[i];
 
             if (row[i]<mins[i]) mins[i]=row[i];
         }
     }
-    for (auto row : data){
+    
+    for (auto& row : data){
         for (size_t i =0; i< 4; i++){
-            row[i]=(row[i]-mins[i]/(maxes[i]-mins[i]));
+            row[i]=(row[i]-mins[i])/(maxes[i]-mins[i]);//min-max scailing
         }
     }
+    //std::cout<<"hello!!!"<<std::endl;
+    return data;
+}
+
+int main(){
+    
+    int trainingSize=100;
+    std::vector<double *>data = readData("iris.data");
+    return 0;
 }
