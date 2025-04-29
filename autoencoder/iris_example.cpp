@@ -29,7 +29,10 @@ std::vector<double *> readData(std::string path){// path라는 문자열을 입�
         double *dptr=d; //d에 대한 포인트 dptr생성
         double value;
         for (std::string s; ss>> value;){ //한줄 안의 숫자들 한개씩 읽기
-            if (ss.peek()==',') ss.ignore(); // 숫자 사이에 쉼표가 있을때 무시하고 넘어가기
+            if (ss.peek()==','){
+                ss.ignore(); // 숫자 사이에 쉼표가 있을때 무시하고 넘어가기
+            }
+                
             *dptr++=value; // 배열 d에 값넣기
             //dptr에 값을 저장한 후 다음 칸으로 이동
         }
@@ -43,9 +46,15 @@ std::vector<double *> readData(std::string path){// path라는 문자열을 입�
     
     for (auto& row : data){
         for (size_t i=0;i<4; i++){//size_t 양수만 표현할 수 있는 정수 타입
-            if (row[i]>maxes[i]) maxes[i]=row[i];
+            if (row[i]>maxes[i]){
+                maxes[i]=row[i];
+            }
+                
 
-            if (row[i]<mins[i]) mins[i]=row[i];
+            if (row[i]<mins[i]){
+                mins[i]=row[i];
+            }
+                
         }
     }
     
@@ -54,7 +63,7 @@ std::vector<double *> readData(std::string path){// path라는 문자열을 입�
             row[i]=(row[i]-mins[i])/(maxes[i]-mins[i]);//min-max scailing
         }
     }
-    //std::cout<<"hello!!!"<<std::endl;
+    std::cout<<"hello!!!"<<std::endl;
     return data;
 }
 
